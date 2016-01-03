@@ -1,5 +1,6 @@
 http://code.tutsplus.com/tutorials/setting-up-continuous-integration-continuous-deployment-with-jenkins--cms-21511
 
+file structure:
 ├── .gitignore
 ├── app.js
 ├── package.json
@@ -10,7 +11,7 @@ http://code.tutsplus.com/tutorials/setting-up-continuous-integration-continuous-
 └── test
     └── test.js
 
-The first step to building any Node.js app is to create a package.json file. Here's ours:
+The first step to building any Node.js app is to create a package.json file. 
 {
   "name": "hello-jenkins",
   "description": "hello jenkins test app",
@@ -24,3 +25,58 @@ The first step to building any Node.js app is to create a package.json file. Her
     "supertest": "0.13.0"
   }
 }
+
+DigitalOcean: ya
+
+Create a server for production
+login to new server:ssh root@APP.SERVER.IP.ADDRESS
+create a new user called app: adduser app
+provide password
+grant new user sudo privileges
+usermod -a -G sudo app
+exit root and reconnect with app
+ssh app@APP.SERVER.IP.ADDRESS
+password
+
+install app:
+install node
+install npm
+install git: sudo apt-get install git
+password
+clone repo from github to home folder
+git clone https://github.com/ghan2014/jenkins.git
+cd jenkins
+install app dependencies: npm install --production
+node app.js
+when a browser makes an HTTP request, it defaults to port 80. So we just need to set our PORT environment variable to 80.
+sudo nano /etc/environment
+add this line: PORT=80
+logout server and ssh back for the login to pickup the changes
+sudo setcap cap_net_bind_service=+ep /usr/local/bin/node!!!!!!!!!!!!!!!!!!!!
+keep our Node.js app running in the background. For that, we'll use forever.
+sudo npm install -g forever
+forever start app.js
+forever stopall
+
+*******************************************************
+ flow of continuous integration
+create a server for jenkins
+adduser admin
+usermod -a -G sudo admin
+the purpose of Jenkins is retrieve our project and run its tests
+sudo apt-get install git
+install jenkins:
+sudo wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update(add a new apt repo)
+install jenkins: sudo apt-get install jenkins
+jenkins will run on port 8080
+install Github plugin: manage Jenkins->manage Plugins->Available->Github plugin->install
+add project
+config github to add web hook
+
+*****************************************************
+flow of CD
+how our Jenkins server will SSH into our app server.
+create an SSH key that the Jenkins server will use to authenticate itself with the app server
+
